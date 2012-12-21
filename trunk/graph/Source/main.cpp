@@ -1,6 +1,8 @@
+#include <iostream>
 #include "Graph.h"
 #include "Dfs.h"
 #include "Bfs.h"
+#include "Dijkstra.h"
 
 int main()
 {
@@ -18,15 +20,22 @@ int main()
   g.AddEdge(GraphEdge(1, 2, cost));
   g.AddEdge(GraphEdge(1, 3, cost));
   g.AddEdge(GraphEdge(2, 4, cost));
-  //g.AddEdge(GraphEdge(3, 4, cost));
-  //g.AddEdge(GraphEdge(3, 5, cost));
-  //g.AddEdge(GraphEdge(4, 5, cost));
+  g.AddEdge(GraphEdge(3, 4, cost));
+  g.AddEdge(GraphEdge(3, 5, cost));
+  g.AddEdge(GraphEdge(4, 5, cost));
 
   Trail trail;
-//  Dfs dfs(&g);
-//  dfs.SearchWithTrail(0, 3, &trail);
+  std::cout << "Depth first\n";
+  Dfs dfs(&g);
+  dfs.SearchWithTrail(0, 5, &trail);
+  PrintTrail(trail);
 
+  std::cout << "Breadth first\n";
+  trail.clear();
   Bfs bfs(&g);
-  bfs.SearchWithTrail(0, 3, &trail);
+  bfs.SimpleBfs(0, 5);
+  bfs.SearchWithTrail(0, 5, &trail);
+  PrintTrail(trail);
 
+  TestDijkstra();
 }

@@ -3,6 +3,7 @@
 
 #include <deque>
 #include <list>
+#include <map>
 #include <vector>
 #include "GraphNode.h"
 #include "GraphEdge.h"
@@ -12,6 +13,13 @@ typedef std::list<GraphEdge> EdgeList; // TODO why not set ?
 typedef std::vector<EdgeList> Edges;
 
 typedef std::deque<int> Trail;
+//typedef std::vector<GraphEdge> Breadcrumbs;
+typedef std::map<int, int> Breadcrumbs; // (to, from) pairs, for making Trail
+
+// Iterate backwards over breadcrumbs (edges encountered during search) to make Trail
+// (path from 'from' to 'to' node)
+void MakeTrail(int from, int to, Breadcrumbs& breadcrumbs, Trail* trail);
+void PrintTrail(const Trail& trail);
 
 class Graph
 {

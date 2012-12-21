@@ -44,6 +44,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\..\..\..\Build\graph\Win\$(Configuration)\</OutDir>
+    <IntDir>..\..\..\..\..\Build\graph\Win\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -78,16 +80,21 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Source\Bfs.cpp" />
     <ClCompile Include="..\..\..\..\Source\Dfs.cpp" />
+    <ClCompile Include="..\..\..\..\Source\Dijkstra.cpp" />
     <ClCompile Include="..\..\..\..\Source\Graph.cpp" />
     <ClCompile Include="..\..\..\..\Source\GraphEdge.cpp" />
     <ClCompile Include="..\..\..\..\Source\main.cpp" />
+    <ClCompile Include="..\..\..\..\Source\NodePriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Source\AStar.h" />
     <ClInclude Include="..\..\..\..\Source\Bfs.h" />
     <ClInclude Include="..\..\..\..\Source\Dfs.h" />
+    <ClInclude Include="..\..\..\..\Source\Dijkstra.h" />
     <ClInclude Include="..\..\..\..\Source\Graph.h" />
     <ClInclude Include="..\..\..\..\Source\GraphEdge.h" />
     <ClInclude Include="..\..\..\..\Source\GraphNode.h" />
+    <ClInclude Include="..\..\..\..\Source\NodePriorityQueue.h" />
     <ClInclude Include="..\..\..\..\Source\Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

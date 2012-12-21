@@ -1,21 +1,19 @@
-#ifndef BFS_H_INCLUDED
-#define BFS_H_INCLUDED
+#ifndef DIJKSTRA_H_INCLUDED
+#define DIJKSTRA_H_INCLUDED
 
-#include <vector>
-#include <deque>
 #include "Graph.h"
 
-class Bfs
+class Dijkstra
 {
 public:
-  Bfs(Graph* g);
+  Dijkstra(Graph* g);
   bool SearchWithTrail(int from, int to, Trail* trail);
   bool SearchNoTrail(int from, int to);
-  bool SimpleBfs(int from, int to);
 
 private:
   Graph* m_graph;
 };
 
+void TestDijkstra();
 
 #endif
