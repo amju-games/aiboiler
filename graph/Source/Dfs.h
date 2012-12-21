@@ -1,8 +1,6 @@
 #ifndef DFS_H_INCLUDED
 #define DFS_H_INCLUDED
 
-#include <vector>
-#include <deque>
 #include "Graph.h"
 
 class Dfs

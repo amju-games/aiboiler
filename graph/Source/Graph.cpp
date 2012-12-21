@@ -1,5 +1,47 @@
 #include <assert.h>
+#include <iostream>
 #include "Graph.h"
+
+void PrintTrail(const Trail& trail)
+{
+  for (unsigned int i = 0; i < trail.size(); i++)
+  {
+    std::cout << trail[i] << " ";
+  }
+  std::cout << "\n";
+}
+
+void MakeTrail(int from, int to, Breadcrumbs& breadcrumbs, Trail* trail)
+{
+  // Map version
+  int node = to;
+  trail->push_front(node);
+  while (true)
+  {
+    Breadcrumbs::iterator it = breadcrumbs.find(node);
+    if (it == breadcrumbs.end() || it->first == it->second)
+    {
+      return;
+    }
+    node = it->second;
+    trail->push_front(node);
+  }
+
+  /*
+  // Vector version
+  int node = to;
+  trail->push_back(node);
+  for (Breadcrumbs::reverse_iterator it = breadcrumbs.rbegin(); it != breadcrumbs.rend(); ++it)
+  {
+    const GraphEdge& e = *it;
+    if (e.GetTo() == node && e.GetTo() != e.GetFrom()) // skip dummy node
+    {
+      node = e.GetFrom();
+      trail->push_front(node);
+    }
+  }
+  */
+}
 
 void Graph::AddNode(GraphNode n)
 {
