@@ -7,7 +7,7 @@ class GraphNode
 {
 public:
   GraphNode() : m_id(-1), m_data(0) {}
-  GraphNode(int id, void* data = 0) : m_id(id), m_data(data) {}
+  GraphNode(int id, const Vec2f& pos, void* data = 0) : m_id(id), m_pos(pos), m_data(data) {}
 
   void SetId(int id) { m_id = id; }
   int GetId() const { return m_id; }
