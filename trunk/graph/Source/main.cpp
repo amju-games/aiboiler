@@ -3,10 +3,64 @@
 #include "Dfs.h"
 #include "Bfs.h"
 #include "Dijkstra.h"
+#include "DrawGraphOpenGL.h"
+#include "CreateGraphGrid.h"
+#include <GL/glut.h>
 
+Graph graph;
+Trail trail;
+
+void Draw()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(50.0f, 200.0f, 200.0f, 50.0f, 0, 0, 0, 1.0, 0);
+
+    DrawGraph(graph);
+    // Superimpose path 
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glColor3f(1, 0, 1);
+    DrawTrail(trail, graph);
+    glColor3f(1, 1, 1);
+
+    glutSwapBuffers();
+    glutPostRedisplay();
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(640, 480);
+    glutCreateWindow("Hello");
+    glutDisplayFunc(Draw);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, 1.0, 1.0, 1000.0); 
+
+    CreateGraphGrid(&graph);
+
+    Dfs dfs(&graph);
+    dfs.SearchWithTrail(0, 55, &trail);
+
+//    Bfs bfs(&graph);
+//    bfs.SearchWithTrail(0, 55, &trail);
+
+    glutMainLoop();
+}
+
+/*
 int main()
 {
-  Graph g;
+
   float cost = 1.0f;
   g.AddNode(GraphNode(0));
   g.AddNode(GraphNode(1));
@@ -39,3 +93,4 @@ int main()
 
   TestDijkstra();
 }
+*/

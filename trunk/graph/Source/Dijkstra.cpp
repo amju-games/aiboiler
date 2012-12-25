@@ -7,12 +7,12 @@
 void TestDijkstra()
 {
   Graph g;
-  g.AddNode(GraphNode(0));
-  g.AddNode(GraphNode(1));
-  g.AddNode(GraphNode(2));
-  g.AddNode(GraphNode(3));
-  g.AddNode(GraphNode(4));
-  g.AddNode(GraphNode(5));
+  g.AddNode(GraphNode(0, Vec2f(1, 1)));
+  g.AddNode(GraphNode(1, Vec2f(2, 2)));
+  g.AddNode(GraphNode(2, Vec2f(1, 1)));
+  g.AddNode(GraphNode(3, Vec2f(1, 1)));
+  g.AddNode(GraphNode(4, Vec2f(1, 1)));
+  g.AddNode(GraphNode(5, Vec2f(1, 1)));
 
   g.AddEdge(GraphEdge(0, 1, 1.0f));
   g.AddEdge(GraphEdge(0, 2, 2.0f));
