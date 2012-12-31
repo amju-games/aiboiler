@@ -10,6 +10,9 @@ public:
   bool SearchWithTrail(int from, int to, Trail* trail);
   bool SearchNoTrail(int from, int to);
 
+  // Start with empty open list, better for mem usage
+  bool SearchWithTrailOpenClosedLists(int from, int to, Trail* trail);
+
 private:
   Graph* m_graph;
 };

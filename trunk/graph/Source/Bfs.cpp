@@ -7,6 +7,47 @@ Bfs::Bfs(Graph* g) : m_graph(g)
 {
 }
 
+bool Bfs::SimpleBfsWithTrail(int start, int end, Trail* trail)
+{
+  // Need to remember which nodes we have already visited
+  std::set<int> visited;
+  std::queue<int> toVisit;
+  Breadcrumbs breadcrumbs;
+
+  toVisit.push(start);
+  while (!toVisit.empty())
+  {
+    int node = toVisit.front();
+    toVisit.pop();
+    visited.insert(node);
+    if (node == end)
+    {
+      std::cout << "Found path!\n";
+      MakeTrail(start, end, breadcrumbs, trail);
+      return true;
+    }
+    else
+    {
+      const EdgeList& edgelist = m_graph->GetEdgeList(node);
+      for (EdgeList::const_iterator it = edgelist.begin(); it != edgelist.end(); ++it)
+      {
+        const GraphEdge& childEdge = *it;
+        int to = childEdge.GetTo();
+        if (visited.count(to) == 0)
+        {
+          breadcrumbs[to] = node; 
+
+          toVisit.push(to);
+          // ...we mark node as visited right away here
+          visited.insert(to);
+        }
+      }
+    }
+  }
+  std::cout << "No path!\n";
+  return false;
+}
+
 bool Bfs::SimpleBfs(int start, int end)
 {
   // Need to remember which nodes we have already visited

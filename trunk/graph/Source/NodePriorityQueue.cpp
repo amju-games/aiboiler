@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <assert.h>
 #include "NodePriorityQueue.h"
 
 struct NodeOrder
@@ -7,9 +8,15 @@ struct NodeOrder
 
   bool operator()(int n1, int n2) const
   {
+    assert(m_costs.find(n1) != m_costs.end());
+    assert(m_costs.find(n2) != m_costs.end());
+
+    // Cost cast hack
+    Costs& costs = const_cast<Costs&>(m_costs);
+
     // We want the node with the lowest total at the root of the heap, so we
     // need the opposite of 'less-than'.
-    return (m_costs[n1] > m_costs[n2]);
+    return (costs[n1] > costs[n2]);
   }
 
 private:
