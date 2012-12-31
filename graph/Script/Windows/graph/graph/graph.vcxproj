@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Source\AStar.cpp" />
     <ClCompile Include="..\..\..\..\Source\Bfs.cpp" />
     <ClCompile Include="..\..\..\..\Source\CreateGraphGrid.cpp" />
     <ClCompile Include="..\..\..\..\Source\Dfs.cpp" />

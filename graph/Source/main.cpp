@@ -3,6 +3,7 @@
 #include "Dfs.h"
 #include "Bfs.h"
 #include "Dijkstra.h"
+#include "AStar.h"
 #include "DrawGraphOpenGL.h"
 #include "CreateGraphGrid.h"
 #include <GL/glut.h>
@@ -48,11 +49,18 @@ int main(int argc, char** argv)
 
     CreateGraphGrid(&graph);
 
-    Dfs dfs(&graph);
-    dfs.SearchWithTrail(0, 55, &trail);
+//    Dfs dfs(&graph);
+//    dfs.SearchWithTrailNodesNotEdges(0, 55, &trail);
 
 //    Bfs bfs(&graph);
-//    bfs.SearchWithTrail(0, 55, &trail);
+//    bfs.SimpleBfsWithTrail(0, 57, &trail);
+
+    Dijkstra di(&graph);
+    //di.SearchWithTrailOpenClosedLists(55, 0, &trail);
+    //di.SearchWithTrail(55, 0, &trail);
+
+    AStar astar(&graph);
+    astar.SearchWithTrailOpenClosedLists(55, 0, &trail);
 
     glutMainLoop();
 }

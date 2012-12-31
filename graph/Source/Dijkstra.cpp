@@ -42,7 +42,7 @@ bool Dijkstra::SearchNoTrail(int from, int to)
   for (int i = 0; i < m_graph->GetNumNodes(); i++)
   {
     const GraphNode& n = m_graph->GetNode(i);
-    costs.push_back(9999); // ? or infinity ?
+    costs[i] = 9999; // ? or infinity ?
     queue.Push(n.GetId());
   }
   costs[from] = 0;
@@ -77,6 +77,149 @@ bool Dijkstra::SearchNoTrail(int from, int to)
         {
           costs[to] = cost;
           std::cout << "Best cost so far to node " << to << " is " << cost << " via " << node << "\n";
+        }
+        else
+        {
+          std::cout << "Cost to node " << to << " is " << cost << " via " << node << " - not best.\n";
+        }
+      }
+      queue.ReSort();
+    }
+  }
+
+  return false;
+}
+
+bool Dijkstra::SearchWithTrail(int from, int to, Trail* trail)
+{
+  Breadcrumbs breadcrumbs;
+  Costs costs;
+
+  // Initialise total costs vector
+  NodePriorityQueue queue(&costs);
+  for (int i = 0; i < m_graph->GetNumNodes(); i++)
+  {
+    const GraphNode& n = m_graph->GetNode(i);
+    int node = n.GetId();
+    costs[node] = 9999; // ? or infinity ?
+    queue.Push(node);
+  }
+  costs[from] = 0;
+  queue.ReSort();
+
+  int numNodesConsidered = 0;
+  while (!queue.IsEmpty())
+  {
+    int node = queue.Top();
+    queue.Pop();
+    numNodesConsidered++;
+    std::cout << "\nConsidering node " << node << "...\n";
+
+    if (node == to)
+    {
+      // TODO Path
+      std::cout << "We have found path to the finish node! Cost is " << costs[to] << "\n";
+      std::cout << "Nodes considered: " << numNodesConsidered << "\n";
+
+      // We have found the finish! Loop back through the breadcrumbs to create the trail.
+      MakeTrail(from, to, breadcrumbs, trail);
+
+      return true;
+    }
+    else
+    {
+      const EdgeList& edgelist = m_graph->GetEdgeList(node);
+      for (EdgeList::const_iterator it = edgelist.begin(); it != edgelist.end(); ++it)
+      {
+        const GraphEdge& childEdge = *it;
+        int to = childEdge.GetTo();
+        // Calc cost of reaching 'to' node on this edge
+        std::cout << "Cost from " << node << " to " << to << " is " << childEdge.GetCost() << "\n";
+        float cost = costs[node] + childEdge.GetCost();
+        if (cost < costs[to])
+        {
+          costs[to] = cost;
+          std::cout << "Best cost so far to node " << to << " is " << cost << " via " << node << "\n";
+          breadcrumbs[to] = node; // cheapest route from 'node' to 'to'
+        }
+        else
+        {
+          std::cout << "Cost to node " << to << " is " << cost << " via " << node << " - not best.\n";
+        }
+      }
+      queue.ReSort();
+    }
+  }
+
+  return false;
+}
+
+bool Dijkstra::SearchWithTrailOpenClosedLists(int from, int to, Trail* trail)
+{
+  Breadcrumbs breadcrumbs;
+  Costs costs;
+  std::set<int> visited; // closed list
+
+  NodePriorityQueue queue(&costs);
+  costs[from] = 0;
+  queue.Push(from);
+
+  //for (int i = 0; i < m_graph->GetNumNodes(); i++)
+  //{
+  //  const GraphNode& n = m_graph->GetNode(i);
+  //  int node = n.GetId();
+  //  costs[node] = 9999; // ? or infinity ?
+  //  queue.Push(node);
+  //}
+  //queue.ReSort();
+
+  int numNodesConsidered = 0;
+  while (!queue.IsEmpty())
+  {
+    int node = queue.Top();
+    queue.Pop();
+    visited.insert(node);
+
+    numNodesConsidered++;
+    std::cout << "\nConsidering node " << node << "...\n";
+
+    if (node == to)
+    {
+      // TODO Path
+      std::cout << "We have found path to the finish node! Cost is " << costs[to] << "\n";
+      std::cout << "Nodes considered: " << numNodesConsidered << "\n";
+
+      // We have found the finish! Loop back through the breadcrumbs to create the trail.
+      MakeTrail(from, to, breadcrumbs, trail);
+
+      return true;
+    }
+    else
+    {
+      const EdgeList& edgelist = m_graph->GetEdgeList(node);
+      for (EdgeList::const_iterator it = edgelist.begin(); it != edgelist.end(); ++it)
+      {
+        const GraphEdge& childEdge = *it;
+        int to = childEdge.GetTo();
+        // 'to' Not visited yet? Set cost to inifinity and add to queue
+
+        // Calc cost of reaching 'to' node on this edge
+        std::cout << "Cost from " << node << " to " << to << " is " << childEdge.GetCost() << "\n";
+        float cost = costs[node] + childEdge.GetCost();
+
+        if (visited.count(to) == 0)
+        {
+          costs[to] = cost;
+          queue.Push(to);
+          // ...we mark node as visited right away here
+          visited.insert(to);
+          breadcrumbs[to] = node; // cheapest route from 'node' to 'to'
+        }
+        else if (cost < costs[to])
+        {
+          costs[to] = cost;
+          std::cout << "Best cost so far to node " << to << " is " << cost << " via " << node << "\n";
+          breadcrumbs[to] = node; // cheapest route from 'node' to 'to'
         }
         else
         {

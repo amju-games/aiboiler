@@ -92,3 +92,89 @@ bool Dfs::SearchWithTrail(int from, int to, Trail* trail)
   }
   return false;
 }
+
+bool Dfs::SearchWithTrailNodesNotEdges(int from, int to, Trail* trail)
+{
+  std::set<int> visited;
+  Breadcrumbs breadcrumbs;
+
+  std::stack<int> nodesToVisit;
+
+  // Put dummy edge in stack
+  const GraphNode& n = m_graph->GetNode(from);
+  nodesToVisit.push(n.GetId());
+
+  while (!nodesToVisit.empty())
+  {
+    int node = nodesToVisit.top();
+    nodesToVisit.pop();
+
+    std::cout << "\nConsidering node " << node << "...\n";
+
+    visited.insert(node);
+
+    if (node == to)
+    {
+      // We have found the finish! Loop back through the breadcrumbs to create the trail.
+      MakeTrail(from, to, breadcrumbs, trail);
+      return true;
+    }
+    else
+    {
+      // Push unvisited neighbours onto stack
+      const EdgeList& edgelist = m_graph->GetEdgeList(node);
+      for (EdgeList::const_iterator it = edgelist.begin(); it != edgelist.end(); ++it)
+      {
+        const GraphEdge& childEdge = *it;
+        int to = childEdge.GetTo();
+        if (visited.count(to) == 0)
+        {
+          nodesToVisit.push(to);
+          breadcrumbs[to] = node; // route from 'node' to 'to'
+        }
+      }
+    }
+  }
+  return false;
+}
+
+bool Dfs::SearchNoTrailNodesNotEdges(int from, int to, Trail* trail)
+{
+  std::set<int> visited;
+
+  std::stack<int> nodesToVisit;
+
+  // Put dummy edge in stack
+  const GraphNode& n = m_graph->GetNode(from);
+  nodesToVisit.push(n.GetId());
+
+  while (!nodesToVisit.empty())
+  {
+    int node = nodesToVisit.top();
+    nodesToVisit.pop();
+
+    std::cout << "\nConsidering node " << node << "...\n";
+
+    visited.insert(node);
+
+    if (node == to)
+    {
+      return true;
+    }
+    else
+    {
+      // Push unvisited neighbours onto stack
+      const EdgeList& edgelist = m_graph->GetEdgeList(node);
+      for (EdgeList::const_iterator it = edgelist.begin(); it != edgelist.end(); ++it)
+      {
+        const GraphEdge& childEdge = *it;
+        int to = childEdge.GetTo();
+        if (visited.count(to) == 0)
+        {
+          nodesToVisit.push(to);
+        }
+      }
+    }
+  }
+  return false;
+}

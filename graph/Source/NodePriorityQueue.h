@@ -2,8 +2,10 @@
 #define NODE_PRIORITY_QUEUE_H_INCLUDED
 
 #include <vector>
+#include <map>
 
-typedef std::vector<float> Costs;
+// Was vector, but map gives us possibility of sparse array of costs
+typedef std::map<int, float> Costs;
 
 class NodePriorityQueue
 {

@@ -17,7 +17,14 @@ void CreateGraphGrid(Graph* g)
       GraphNode node(id, pos, 0);
       g->AddNode(node);
 
-      if (j > 0)
+      if (rand() % 2 == 0)
+      {
+        // Don't connect
+        id++;
+        continue;
+      }
+
+      if (j > 0) 
       {
         GraphEdge edge(id - 1, id, COST);
         g->AddEdge(edge);
