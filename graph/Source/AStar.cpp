@@ -1,6 +1,7 @@
 #include <set>
 #include <assert.h>
 #include <iostream>
+#include <math.h>
 #include "AStar.h"
 #include "NodePriorityQueue.h"
 

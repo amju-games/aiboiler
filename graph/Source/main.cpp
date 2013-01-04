@@ -6,7 +6,11 @@
 #include "AStar.h"
 #include "DrawGraphOpenGL.h"
 #include "CreateGraphGrid.h"
+#ifdef WIN32
 #include <GL/glut.h>
+#else
+#include <GLUT/glut.h>
+#endif
 
 Graph graph;
 Trail trail;
