@@ -1,3 +1,4 @@
+#include <math.h>
 #include "CreateGraphGrid.h"
 #include "Graph.h"
 
@@ -35,13 +36,13 @@ void CreateGraphGrid(Graph* g)
         GraphEdge edge(id - GRID_SIZE, id, COST);
         g->AddEdge(edge);
       }
-      /*
+      
       if (i > 0 && j > 0)
       {
         GraphEdge edge(id - GRID_SIZE - 1, id, DIAG_COST);
         g->AddEdge(edge);
       }
-      */
+      
       id++;
     }
   }

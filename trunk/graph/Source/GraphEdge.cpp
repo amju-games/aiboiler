@@ -1,4 +1,4 @@
-#include <utility>  // swap()
+#include <algorithm> // swap()
 #include "GraphEdge.h"
 
 GraphEdge GraphEdge::SwapFromTo()

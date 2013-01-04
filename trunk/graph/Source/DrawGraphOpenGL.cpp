@@ -1,12 +1,17 @@
 #include "DrawGraphOpenGL.h"
+#ifdef WIN32
 #include <gl/glut.h>
+#else
+#include <GLUT/glut.h>
+#endif
 
 static const float NODE_SIZE = 3.0f;
+static const float LINE_WIDTH = 4.0f;
 
 void DrawGraph(const Graph& g)
 {
   DrawGraphNodes(g);
-  glLineWidth(2.0f);
+  glLineWidth(LINE_WIDTH);
   DrawGraphEdges(g);
 }
 
