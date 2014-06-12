@@ -130,6 +130,7 @@ bool Dfs::SearchWithTrailNodesNotEdges(int from, int to, Trail* trail)
         if (visited.count(to) == 0)
         {
           nodesToVisit.push(to);
+          visited.insert(to);
           breadcrumbs[to] = node; // route from 'node' to 'to'
         }
       }

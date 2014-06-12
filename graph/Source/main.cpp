@@ -21,7 +21,7 @@ void Draw()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(50.0f, 200.0f, 200.0f, 50.0f, 0, 0, 0, 1.0, 0);
+    gluLookAt(50.0f, 200.0f, 50.0f, 50.0f, 0, 40, 0, 1.0, 0);
 
     DrawGraph(graph);
     // Superimpose path 
@@ -53,18 +53,18 @@ int main(int argc, char** argv)
 
     CreateGraphGrid(&graph);
 
-//    Dfs dfs(&graph);
-//    dfs.SearchWithTrailNodesNotEdges(0, 55, &trail);
+    Dfs dfs(&graph);
+    dfs.SearchWithTrailNodesNotEdges(0, 63, &trail);
 
 //    Bfs bfs(&graph);
 //    bfs.SimpleBfsWithTrail(0, 57, &trail);
 
-    Dijkstra di(&graph);
+    //Dijkstra di(&graph);
     //di.SearchWithTrailOpenClosedLists(55, 0, &trail);
     //di.SearchWithTrail(55, 0, &trail);
 
-    AStar astar(&graph);
-    astar.SearchWithTrailOpenClosedLists(55, 0, &trail);
+//    AStar astar(&graph);
+//    astar.SearchWithTrailOpenClosedLists(55, 0, &trail);
 
     glutMainLoop();
 }
