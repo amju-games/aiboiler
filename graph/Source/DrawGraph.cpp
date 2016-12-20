@@ -1,3 +1,5 @@
+#include <OpenGL/gl.h>
+#include <GLUT/glut.h>
 #include "Graph.h"
 
 void Draw(Graph* graph)
@@ -22,7 +24,7 @@ void Draw(Graph* graph)
          ++it)
     {
       // For each edge, get the destination node
-      const GraphEdge* edge = it;
+      const GraphEdge& edge = *it;
       int destId =  edge.GetDest();
       const GraphNode& dest = graph->GetNode(destId);
 

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h> // rand()
 #include "CreateGraphGrid.h"
 #include "Graph.h"
 
